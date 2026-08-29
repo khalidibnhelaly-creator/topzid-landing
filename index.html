@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Khalid Bin Helaly - AI Film & Strategy</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://db.onlinewebfonts.com/c/d08bafd725a4cfc309efb5a88e0b63a5?family=basis33" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: {
+        gold: '#C9A24B',
+        goldbright: '#E3BE63',
+        studio: '#0A0A0A'
+      } } }
+    };
+  </script>
+
+  <style>
+    :root { --gold: #C9A24B; --gold-bright: #E3BE63; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background: #000;
+    }
+    .font-pixel { font-family: 'basis33', monospace; }
+    .text-gold { color: var(--gold); }
+
+    /* Golden color-grade wash over the hero video */
+    .hero-tint {
+      position: absolute; inset: 0; z-index: 5; pointer-events: none;
+      background:
+        radial-gradient(120% 90% at 50% 25%, rgba(201,162,75,0.18) 0%, rgba(201,162,75,0.05) 35%, rgba(0,0,0,0) 62%),
+        linear-gradient(180deg, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0.10) 65%, rgba(0,0,0,0.60) 100%);
+      mix-blend-mode: normal;
+    }
+
+    /* ---------- 3D WORKS RING ---------- */
+    .scene {
+      position: relative; width: 100%; height: 88vh; min-height: 620px;
+      perspective: 2400px; overflow: hidden;
+    }
+    .ring {
+      position: absolute; top: 50%; left: 50%; width: 0; height: 0;
+      transform-style: preserve-3d; will-change: transform;
+    }
+    .panel {
+      position: absolute; left: 50%; top: 50%;
+      width: var(--pw, 240px); height: calc(var(--pw, 240px) * 0.5625);
+      margin-left: calc(var(--pw, 240px) / -2);
+      margin-top: calc(var(--pw, 240px) * 0.5625 / -2);
+      cursor: pointer;
+      border: 1px solid rgba(201,162,75,0.25);
+      background: #0B0B0B; overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      transition: opacity .2s linear, border-color .2s;
+    }
+    .panel:hover { border-color: var(--gold); }
+    .panel img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+    .panel .play {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.55) 100%);
+    }
+    .panel .tag {
+      position: absolute; bottom: 8px; left: 10px; right: 10px;
+      font-size: 11px; letter-spacing: .12em; color: var(--gold); text-transform: uppercase;
+    }
+    .panel .play svg { opacity: 0; transition: opacity .2s; }
+    .panel:hover .play svg { opacity: 1; }
+  </style>
+</head>
+
+<body class="text-white">
+
+  <!-- ==================== HERO ==================== -->
+  <div class="relative h-screen w-full overflow-hidden bg-black text-white">
+
+    <video
+      autoplay muted loop playsinline
+      class="absolute inset-0 h-full w-full object-cover lg:scale-[1.2]"
+      src="hero.mp4">
+    </video>
+
+    <!-- golden tint wash -->
+    <div class="hero-tint"></div>
+
+    <div class="relative z-10 flex h-full flex-col px-5 sm:px-6 md:px-10 lg:px-14">
+
+      <!-- NAVBAR -->
+      <nav class="flex items-center justify-between py-6">
+        <a href="#top" aria-label="Khalid Bin Helaly">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 256 256" fill="none">
+            <path d="M32 0 H96 V256 H32 Z" fill="#C9A24B" />
+            <path d="M96 118 L214 0 H256 L138 128 L256 256 H214 L96 138 Z" fill="#C9A24B" />
+          </svg>
+        </a>
+
+        <div class="hidden md:flex items-center gap-8 text-sm tracking-wide">
+          <a href="#about" class="hover:text-gold transition-colors">ABOUT</a>
+          <a href="#work" class="hover:text-gold transition-colors">WORK</a>
+          <a href="#services" class="hover:text-gold transition-colors">SERVICES</a>
+          <a href="#films" class="hover:text-gold transition-colors">FILMS</a>
+          <a href="#commercial" class="hover:text-gold transition-colors">COMMERCIAL</a>
+          <a href="#talk" class="hover:text-gold transition-colors">TALK</a>
+        </div>
+
+        <button id="menuBtn" class="md:hidden p-2 hover:text-gold transition-colors" aria-label="Open menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+        </button>
+      </nav>
+
+      <!-- META GRID -->
+      <div class="mt-4 grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+        <div>
+          <h2 class="text-lg md:text-xl tracking-wide leading-tight">
+            <span class="font-normal block">KHALID</span>
+            <span class="font-pixel text-2xl md:text-3xl block text-gold">BIN HELALY</span>
+          </h2>
+          <div class="text-[10px] text-gold/60 mt-3">*</div>
+          <p class="font-pixel mt-1 text-xs text-white/60 leading-relaxed">
+            TOPZID is my AI<br>
+            studio - I cook up cinematic<br>
+            brand films &amp; content<br>
+            systems from Bangladesh
+          </p>
+        </div>
+
+        <div class="text-right lg:text-left">
+          <h2 class="text-lg md:text-xl tracking-wide leading-tight">
+            <span class="font-normal block">AI FILM &amp;</span>
+            <span class="font-pixel text-2xl md:text-3xl block text-gold">STRATEGY</span>
+          </h2>
+        </div>
+
+        <div>
+          <div class="text-base tracking-widest text-gold/80 uppercase mb-3 font-pixel">What I Do</div>
+          <p class="text-sm text-white/90 leading-relaxed max-w-[220px]">
+            I create the top 1% of AI-generated films and brand content for ambitious brands and creators
+          </p>
+        </div>
+
+        <div class="text-right lg:text-left">
+          <div class="text-base tracking-widest text-gold/80 uppercase mb-3 font-pixel">Services</div>
+          <ul class="text-sm text-white/90 leading-relaxed space-y-0.5">
+            <li>AI Filmmaking &amp; Cinematography</li>
+            <li>Brand Strategy &amp; Consulting</li>
+            <li>Generative AI Content</li>
+            <li>Prompt Engineering</li>
+            <li>Marketing Systems &amp; Automation</li>
+            <li>AI Masterclass &amp; Training</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="flex-1"></div>
+
+      <!-- BOTTOM -->
+      <div class="pb-4">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 items-end">
+          <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-[3.75rem] xl:text-[4.25rem] tracking-wide uppercase font-normal" style="line-height:0.72">
+            I TURN BRANDS<br>
+            INTO <span class="font-pixel font-normal text-[1.25em] inline-block leading-none align-baseline text-gold">CINEMATIC</span><br>
+            AI-DRIVEN<br>
+            <span class="font-pixel font-normal text-[1.25em] inline-block leading-none align-baseline text-gold">EXPERIENCES</span>
+          </h1>
+
+          <div class="flex flex-col gap-4 sm:gap-6 justify-end">
+            <a href="#work" class="self-start flex items-center gap-3 border border-gold/40 px-6 py-3 backdrop-blur-sm bg-gold/10 hover:bg-gold/20 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#C9A24B" stroke="#C9A24B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
+              <span class="text-sm tracking-wider text-gold">MY WORKS</span>
+            </a>
+
+            <div class="self-start lg:self-end flex flex-wrap items-stretch gap-2 sm:gap-3 text-sm text-white/80">
+              <div class="bg-[#0B0B0B] border border-gold/20 px-3 sm:px-4 py-2 flex items-center gap-2">
+                <span class="font-bold text-sm sm:text-base tracking-tight">AI FILMS</span>
+                <span class="text-gold text-xs">300+</span>
+              </div>
+              <div class="bg-[#0B0B0B] border border-gold/20 px-3 sm:px-4 py-2 flex items-center gap-2">
+                <span class="font-bold text-lg sm:text-xl">BRANDS</span>
+                <span class="text-gold text-xs">25+</span>
+              </div>
+              <div class="bg-[#0B0B0B] border border-gold/20 px-3 sm:px-4 py-2 flex items-center gap-2">
+                <span class="font-bold text-[10px] sm:text-xs tracking-tight">AI TOOLS MASTERED</span>
+                <span class="text-gold text-xs">15+</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 sm:mt-5 grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 pt-4">
+          <div class="text-xs text-white/60">
+            Open to freelance, consulting &amp; brand partnerships.
+            <a href="#talk" class="text-gold hover:text-goldbright transition-colors">Schedule a call</a>
+          </div>
+          <div class="text-xs text-white/60 sm:text-right">
+            300+ AI films &bull; 25+ brands &bull; Dhaka, Bangladesh
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <a href="#work" class="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 text-gold/60 hover:text-gold transition-colors animate-bounce" aria-label="Scroll to works">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+    </a>
+  </div>
+
+  <!-- ==================== WORK — 3D FLOATING RING ==================== -->
+  <section id="work" class="bg-black py-16 sm:py-24 px-5 sm:px-6 md:px-10 lg:px-14 border-t border-gold/15">
+    <div class="flex items-end justify-between mb-6 sm:mb-10">
+      <div>
+        <div class="font-pixel text-base tracking-widest text-gold/80 uppercase mb-2">Selected Works</div>
+        <h2 class="text-2xl sm:text-3xl md:text-4xl uppercase tracking-wide">The <span class="font-pixel text-[1.15em] text-gold">Reel</span> Universe</h2>
+      </div>
+      <div class="hidden sm:block text-xs text-white/40 text-right max-w-[220px]">Drag to spin &bull; click a panel to play</div>
+    </div>
+
+    <div class="scene" id="scene">
+      <div class="ring" id="ring"></div>
+    </div>
+  </section>
+
+  <!-- ==================== FILMS ==================== -->
+  <section id="films" class="bg-black py-16 sm:py-24 px-5 sm:px-6 md:px-10 lg:px-14 border-t border-gold/15">
+    <div class="mb-8">
+      <div class="font-pixel text-base tracking-widest text-gold/80 uppercase mb-2">Films</div>
+      <h2 class="text-2xl sm:text-3xl md:text-4xl uppercase tracking-wide">Cinematic <span class="font-pixel text-[1.15em] text-gold">AI</span> Films</h2>
+    </div>
+    <div id="filmsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"></div>
+  </section>
+
+  <!-- ==================== COMMERCIAL ==================== -->
+  <section id="commercial" class="bg-black py-16 sm:py-24 px-5 sm:px-6 md:px-10 lg:px-14 border-t border-gold/15">
+    <div class="mb-8">
+      <div class="font-pixel text-base tracking-widest text-gold/80 uppercase mb-2">Commercial</div>
+      <h2 class="text-2xl sm:text-3xl md:text-4xl uppercase tracking-wide">Brand <span class="font-pixel text-[1.15em] text-gold">Commercials</span></h2>
+    </div>
+    <div id="commercialGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"></div>
+  </section>
+
+  <!-- ==================== SERVICES ==================== -->
+  <section id="services" class="bg-black py-16 sm:py-24 px-5 sm:px-6 md:px-10 lg:px-14 border-t border-gold/15">
+    <div class="mb-8">
+      <div class="font-pixel text-base tracking-widest text-gold/80 uppercase mb-2">Services</div>
+      <h2 class="text-2xl sm:text-3xl md:text-4xl uppercase tracking-wide">What I <span class="font-pixel text-[1.15em] text-gold">Offer</span></h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-gold/15 border border-gold/15">
+      <div class="bg-black p-6 sm:p-8 group hover:bg-studio transition-colors">
+        <div class="font-pixel text-gold text-sm mb-3">01</div>
+        <h3 class="text-lg sm:text-xl mb-2">AI Filmmaking &amp; Cinematography</h3>
+        <p class="text-sm text-white/60 leading-relaxed">Generative cinematic films, brand reels, and commercials built with a full AI production pipeline — from concept to final grade.</p>
+      </div>
+      <div class="bg-black p-6 sm:p-8 hover:bg-studio transition-colors">
+        <div class="font-pixel text-gold text-sm mb-3">02</div>
+        <h3 class="text-lg sm:text-xl mb-2">Brand Strategy &amp; Consulting</h3>
+        <p class="text-sm text-white/60 leading-relaxed">Positioning, growth strategy, and marketing psychology — mapping your audience through every stage of awareness to the sale.</p>
+      </div>
+      <div class="bg-black p-6 sm:p-8 hover:bg-studio transition-colors">
+        <div class="font-pixel text-gold text-sm mb-3">03</div>
+        <h3 class="text-lg sm:text-xl mb-2">Generative AI Content</h3>
+        <p class="text-sm text-white/60 leading-relaxed">Short cinematic, social-first content engineered around 3-second hooks and emotion-driven storytelling that stops the scroll.</p>
+      </div>
+      <div class="bg-black p-6 sm:p-8 hover:bg-studio transition-colors">
+        <div class="font-pixel text-gold text-sm mb-3">04</div>
+        <h3 class="text-lg sm:text-xl mb-2">Prompt Engineering</h3>
+        <p class="text-sm text-white/60 leading-relaxed">Production-grade prompt systems across Midjourney, Kling, Veo, Runway, Higgsfield and more — consistent, repeatable, on-brand.</p>
+      </div>
+      <div class="bg-black p-6 sm:p-8 hover:bg-studio transition-colors">
+        <div class="font-pixel text-gold text-sm mb-3">05</div>
+        <h3 class="text-lg sm:text-xl mb-2">Marketing Systems &amp; Automation</h3>
+        <p class="text-sm text-white/60 leading-relaxed">Content engines and workflow automation (n8n + AI) that turn one idea into a full multi-platform campaign at scale.</p>
+      </div>
+      <div class="bg-black p-6 sm:p-8 hover:bg-studio transition-colors">
+        <div class="font-pixel text-gold text-sm mb-3">06</div>
+        <h3 class="text-lg sm:text-xl mb-2">AI Masterclass &amp; Training</h3>
+        <p class="text-sm text-white/60 leading-relaxed">Hands-on training that takes teams, students and professionals from zero to producing real AI content and workflows.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ABOUT ==================== -->
+  <section id="about" class="bg-black py-16 sm:py-24 px-5 sm:px-6 md:px-10 lg:px-14 border-t border-gold/15">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+      <div>
+        <div class="font-pixel text-base tracking-widest text-gold/80 uppercase mb-4">About</div>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl uppercase tracking-wide leading-[0.9] mb-6">
+          Creative <span class="font-pixel text-[1.15em] text-gold">Entrepreneur</span><br>
+          &amp; AI <span class="font-pixel text-[1.15em] text-gold">Strategist</span>
+        </h2>
+        <p class="text-sm sm:text-base text-white/70 leading-relaxed mb-4">
+          I'm Khalid Bin Helaly — a Bangladeshi creative entrepreneur, AI strategist, filmmaker and brand consultant working at the intersection of AI, storytelling, marketing and business strategy.
+        </p>
+        <p class="text-sm sm:text-base text-white/70 leading-relaxed">
+          As founder of <span class="text-gold">TOPZID</span>, I've produced hundreds of AI commercial videos for brands across Bangladesh, and I'm building a personal brand around AI creativity and automation — combining multiple AI tools into single, cinematic production workflows.
+        </p>
+      </div>
+      <div class="grid grid-cols-2 gap-px bg-gold/15 border border-gold/15">
+        <div class="bg-black p-5"><div class="font-pixel text-gold/70 text-xs mb-2">Role</div><div class="text-sm">AI Content Expert</div></div>
+        <div class="bg-black p-5"><div class="font-pixel text-gold/70 text-xs mb-2">Role</div><div class="text-sm">Brand &amp; Growth Consultant</div></div>
+        <div class="bg-black p-5"><div class="font-pixel text-gold/70 text-xs mb-2">Role</div><div class="text-sm">Generative AI Cinematographer</div></div>
+        <div class="bg-black p-5"><div class="font-pixel text-gold/70 text-xs mb-2">Role</div><div class="text-sm">Prompt Engineering Specialist</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== TALK — CONTACT FORM ==================== -->
+  <section id="talk" class="bg-black py-16 sm:py-24 px-5 sm:px-6 md:px-10 lg:px-14 border-t border-gold/15">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+      <div>
+        <div class="font-pixel text-base tracking-widest text-gold/80 uppercase mb-4">Talk</div>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl uppercase tracking-wide leading-[0.9] mb-6">
+          Let's <span class="font-pixel text-[1.15em] text-gold">Build</span><br>Something
+        </h2>
+        <p class="text-sm sm:text-base text-white/70 leading-relaxed max-w-md">
+          Freelance, consulting or brand partnership — tell me what you're building and I'll get back to you. Every message lands straight in my inbox.
+        </p>
+      </div>
+
+      <form id="contactForm" class="flex flex-col gap-4">
+        <div>
+          <label class="font-pixel text-xs text-gold/80 uppercase tracking-widest">Name</label>
+          <input name="name" type="text" required maxlength="200"
+            class="mt-2 w-full bg-transparent border border-white/20 focus:border-gold outline-none px-4 py-3 text-sm transition-colors" placeholder="Your name">
+        </div>
+        <div>
+          <label class="font-pixel text-xs text-gold/80 uppercase tracking-widest">Email</label>
+          <input name="email" type="email" required maxlength="320"
+            class="mt-2 w-full bg-transparent border border-white/20 focus:border-gold outline-none px-4 py-3 text-sm transition-colors" placeholder="you@email.com">
+        </div>
+        <div>
+          <label class="font-pixel text-xs text-gold/80 uppercase tracking-widest">Message</label>
+          <textarea name="message" required maxlength="5000" rows="5"
+            class="mt-2 w-full bg-transparent border border-white/20 focus:border-gold outline-none px-4 py-3 text-sm transition-colors resize-none" placeholder="Tell me about your project..."></textarea>
+        </div>
+        <button type="submit" id="submitBtn"
+          class="self-start flex items-center gap-3 border border-gold/40 px-6 py-3 bg-gold/10 hover:bg-gold/20 transition-colors disabled:opacity-50">
+          <span class="text-sm tracking-wider text-gold" id="submitLabel">SEND MESSAGE</span>
+        </button>
+        <p id="formStatus" class="text-sm hidden"></p>
+      </form>
+    </div>
+
+    <div class="mt-16 pt-6 border-t border-gold/15 flex flex-col sm:flex-row justify-between gap-2 text-xs text-white/40">
+      <div>&copy; 2026 Khalid Bin Helaly &bull; <span class="text-gold/70">TOPZID</span></div>
+      <div>Dhaka, Bangladesh</div>
+    </div>
+  </section>
+
+  <!-- ==================== MOBILE MENU ==================== -->
+  <div id="mobileMenu" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex flex-col transition-all duration-500 opacity-0 pointer-events-none" style="transition-timing-function:cubic-bezier(0.16,1,0.3,1)">
+    <div class="flex items-center justify-between px-6 py-6">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 256 256" fill="none">
+        <path d="M32 0 H96 V256 H32 Z" fill="#C9A24B" />
+        <path d="M96 118 L214 0 H256 L138 128 L256 256 H214 L96 138 Z" fill="#C9A24B" />
+      </svg>
+      <button id="closeBtn" class="p-2 hover:text-gold transition-colors" aria-label="Close menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+    <nav id="mobileNav" class="flex flex-col items-center justify-center flex-1 gap-8">
+      <a href="#about" class="menu-link text-2xl tracking-widest opacity-0 translate-y-4 transition-all duration-500 hover:text-gold" style="transition-timing-function:cubic-bezier(0.16,1,0.3,1)">ABOUT</a>
+      <a href="#work" class="menu-link text-2xl tracking-widest opacity-0 translate-y-4 transition-all duration-500 hover:text-gold" style="transition-timing-function:cubic-bezier(0.16,1,0.3,1)">WORK</a>
+      <a href="#services" class="menu-link text-2xl tracking-widest opacity-0 translate-y-4 transition-all duration-500 hover:text-gold" style="transition-timing-function:cubic-bezier(0.16,1,0.3,1)">SERVICES</a>
+      <a href="#films" class="menu-link text-2xl tracking-widest opacity-0 translate-y-4 transition-all duration-500 hover:text-gold" style="transition-timing-function:cubic-bezier(0.16,1,0.3,1)">FILMS</a>
+      <a href="#commercial" class="menu-link text-2xl tracking-widest opacity-0 translate-y-4 transition-all duration-500 hover:text-gold" style="transition-timing-function:cubic-bezier(0.16,1,0.3,1)">COMMERCIAL</a>
+      <a href="#talk" class="menu-link text-2xl tracking-widest opacity-0 translate-y-4 transition-all duration-500 hover:text-gold" style="transition-timing-function:cubic-bezier(0.16,1,0.3,1)">TALK</a>
+    </nav>
+  </div>
+
+  <!-- ==================== LIGHTBOX ==================== -->
+  <div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md items-center justify-center p-4 hidden">
+    <button id="lbClose" class="absolute top-5 right-5 p-2 text-gold/70 hover:text-gold" aria-label="Close video">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+    <div class="w-full max-w-4xl aspect-video border border-gold/20">
+      <iframe id="lbFrame" class="w-full h-full" src="" title="video" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <script>
+    const films = ["61B7jntxwGE","hI9jnC2IwOs","Np7ORoRJGs0","Q8BOHYW79RM","t632xP1jL4o","CFkhvhBQkUk","1es_dDYFsM0","RxHGNNC6ppw"];
+    const commercials = ["Hfhq3VXvSHg","Bi7fsl_XZR4","dCbnGqsrumc"];
+
+    const works = [
+      ...films.map((id,i) => ({id, tag: "AI Film " + String(i+1).padStart(2,'0')})),
+      ...commercials.map((id,i) => ({id, tag: "Commercial " + String(i+1).padStart(2,'0')})),
+    ];
+
+    const thumb = (id) => `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+    const embed = (id) => `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`;
+
+    /* LIGHTBOX */
+    const lightbox = document.getElementById('lightbox');
+    const lbFrame = document.getElementById('lbFrame');
+    function openVideo(id){ lbFrame.src = embed(id); lightbox.classList.remove('hidden'); lightbox.classList.add('flex'); document.body.style.overflow = 'hidden'; }
+    function closeVideo(){ lbFrame.src = ""; lightbox.classList.add('hidden'); lightbox.classList.remove('flex'); document.body.style.overflow = ''; }
+    document.getElementById('lbClose').addEventListener('click', closeVideo);
+    lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) closeVideo(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeVideo(); });
+
+    /* GRIDS */
+    function buildGrid(elId, ids){
+      const el = document.getElementById(elId);
+      el.innerHTML = ids.map(id => `
+        <div class="aspect-video border border-gold/15 bg-[#0B0B0B] overflow-hidden">
+          <iframe class="w-full h-full" loading="lazy"
+            src="https://www.youtube.com/embed/${id}?rel=0&modestbranding=1"
+            title="video" frameborder="0"
+            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>`).join('');
+    }
+    buildGrid('filmsGrid', films);
+    buildGrid('commercialGrid', commercials);
+
+    /* 3D RING */
+    const ring = document.getElementById('ring');
+    const scene = document.getElementById('scene');
+    const N = works.length;
+    const step = 360 / N;
+    let radius = 420, panelW = 240;
+
+    function computeSize(){
+      const w = window.innerWidth;
+      panelW = w < 640 ? 300 : (w < 1024 ? 500 : 700);
+      radius = Math.round((panelW/2) / Math.tan(Math.PI / N)) + 40;
+      document.documentElement.style.setProperty('--pw', panelW + 'px');
+    }
+
+    let panels = [];
+    function buildRing(){
+      ring.innerHTML = "";
+      panels = works.map((w, i) => {
+        const p = document.createElement('div');
+        p.className = 'panel';
+        p.style.transform = `rotateY(${i*step}deg) translateZ(${radius}px)`;
+        p.innerHTML = `
+          <img src="${thumb(w.id)}" alt="${w.tag}">
+          <div class="play"><svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 24 24" fill="#C9A24B" stroke="#C9A24B" stroke-width="1" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></svg></div>
+          <div class="tag">${w.tag}</div>`;
+        p.addEventListener('click', ()=> { if(!dragged) openVideo(w.id); });
+        ring.appendChild(p);
+        return p;
+      });
+    }
+
+    function layout(){
+      computeSize();
+      panels.forEach((p,i)=> p.style.transform = `rotateY(${i*step}deg) translateZ(${radius}px)`);
+    }
+
+    let angle = 0, autoSpeed = 0.10, paused = false;
+    let dragging = false, dragged = false, lastX = 0;
+
+    function frame(){
+      if(!paused && !dragging) angle += autoSpeed;
+      ring.style.transform = `translateZ(${-radius}px) rotateY(${angle}deg)`;
+      panels.forEach((p,i)=>{
+        const a = ((i*step + angle) % 360 + 360) % 360;
+        const front = Math.cos(a * Math.PI/180);
+        p.style.opacity = (0.20 + 0.80 * ((front+1)/2)).toFixed(3);
+        p.style.pointerEvents = front > 0.1 ? 'auto' : 'none';
+      });
+      requestAnimationFrame(frame);
+    }
+
+    scene.addEventListener('mouseenter', ()=> paused = true);
+    scene.addEventListener('mouseleave', ()=> paused = false);
+    scene.addEventListener('pointerdown', (e)=>{ dragging = true; dragged = false; lastX = e.clientX; scene.setPointerCapture(e.pointerId); });
+    scene.addEventListener('pointermove', (e)=>{ if(!dragging) return; const dx = e.clientX - lastX; if(Math.abs(dx) > 3) dragged = true; angle += dx * 0.25; lastX = e.clientX; });
+    const endDrag = ()=>{ dragging = false; setTimeout(()=> dragged = false, 50); };
+    scene.addEventListener('pointerup', endDrag);
+    scene.addEventListener('pointercancel', endDrag);
+
+    buildRing(); layout(); frame();
+    window.addEventListener('resize', layout);
+
+    /* MOBILE MENU */
+    const menu = document.getElementById('mobileMenu');
+    const links = document.querySelectorAll('.menu-link');
+    function openMenu(){ menu.classList.remove('opacity-0','pointer-events-none'); menu.classList.add('opacity-100','pointer-events-auto'); links.forEach((l,i)=>{ l.style.transitionDelay = (100+i*60)+'ms'; l.classList.remove('opacity-0','translate-y-4'); l.classList.add('opacity-100','translate-y-0'); }); }
+    function closeMenu(){ menu.classList.add('opacity-0','pointer-events-none'); menu.classList.remove('opacity-100','pointer-events-auto'); links.forEach((l)=>{ l.style.transitionDelay = '0ms'; l.classList.add('opacity-0','translate-y-4'); l.classList.remove('opacity-100','translate-y-0'); }); }
+    document.getElementById('menuBtn').addEventListener('click', openMenu);
+    document.getElementById('closeBtn').addEventListener('click', closeMenu);
+    links.forEach((l)=> l.addEventListener('click', closeMenu));
+
+    /* CONTACT FORM -> SUPABASE */
+    const SUPABASE_URL = "https://yuxdvspnxwltqchqluso.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_7vjFoH1Fio_PlwjSbWnfQw_8ng889Od";
+    const form = document.getElementById('contactForm');
+    const status = document.getElementById('formStatus');
+    const submitBtn = document.getElementById('submitBtn');
+    const submitLabel = document.getElementById('submitLabel');
+
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      status.classList.add('hidden');
+      submitBtn.disabled = true;
+      submitLabel.textContent = 'SENDING...';
+      const data = { name: form.name.value.trim(), email: form.email.value.trim(), message: form.message.value.trim(), source: 'landing_page' };
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/contact_messages`, {
+          method: 'POST',
+          headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+          body: JSON.stringify(data)
+        });
+        if(!res.ok){ throw new Error(await res.text()); }
+        form.reset();
+        status.textContent = "Message sent — I'll be in touch soon.";
+        status.className = "text-sm text-gold";
+      } catch(err){
+        status.textContent = "Something went wrong. Please email me directly.";
+        status.className = "text-sm text-red-400";
+        console.error(err);
+      } finally {
+        status.classList.remove('hidden');
+        submitBtn.disabled = false;
+        submitLabel.textContent = 'SEND MESSAGE';
+      }
+    });
+  </script>
+</body>
+</html>
