@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Khalid Bin Helaly - AI Film & Strategy</title>
+  <meta name="description" content="Khalid Bin Helaly, founder of TOPZID, an AI-native creative agency in Dhaka. Cinematic AI films, brand content and strategy.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,67 +34,62 @@
     .font-pixel { font-family: 'basis33', monospace; }
     .text-gold { color: var(--gold); }
 
-    /* Golden color-grade wash over the hero video */
     .hero-tint {
       position: absolute; inset: 0; z-index: 5; pointer-events: none;
       background:
         radial-gradient(120% 90% at 50% 25%, rgba(201,162,75,0.18) 0%, rgba(201,162,75,0.05) 35%, rgba(0,0,0,0) 62%),
         linear-gradient(180deg, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0.10) 65%, rgba(0,0,0,0.60) 100%);
-      mix-blend-mode: normal;
     }
 
-    /* ---------- 3D WORKS RING ---------- */
-    .scene {
-      position: relative; width: 100%; height: 88vh; min-height: 620px;
-      perspective: 2400px; overflow: hidden;
-    }
-    .ring {
-      position: absolute; top: 50%; left: 50%; width: 0; height: 0;
-      transform-style: preserve-3d; will-change: transform;
-    }
+    /* Brand marquee */
+    .marquee { overflow: hidden; width: 100%; }
+    .marquee-track { display: inline-flex; align-items: center; white-space: nowrap; animation: scroll 32s linear infinite; }
+    .marquee:hover .marquee-track { animation-play-state: paused; }
+    @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .brand-item { font-size: 1.1rem; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,0.55); padding: 0 2.25rem; }
+    .brand-dot { color: var(--gold); }
+
+    /* 3D WORKS RING */
+    .scene { position: relative; width: 100%; height: 88vh; min-height: 620px; perspective: 2400px; overflow: hidden; }
+    .ring { position: absolute; top: 50%; left: 50%; width: 0; height: 0; transform-style: preserve-3d; will-change: transform; }
     .panel {
       position: absolute; left: 50%; top: 50%;
       width: var(--pw, 240px); height: calc(var(--pw, 240px) * 0.5625);
-      margin-left: calc(var(--pw, 240px) / -2);
-      margin-top: calc(var(--pw, 240px) * 0.5625 / -2);
-      cursor: pointer;
-      border: 1px solid rgba(201,162,75,0.25);
-      background: #0B0B0B; overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      margin-left: calc(var(--pw, 240px) / -2); margin-top: calc(var(--pw, 240px) * 0.5625 / -2);
+      cursor: pointer; border: 1px solid rgba(201,162,75,0.25);
+      background: #0B0B0B; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.6);
       transition: opacity .2s linear, border-color .2s;
     }
     .panel:hover { border-color: var(--gold); }
     .panel img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
-    .panel .play {
-      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-      background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.55) 100%);
-    }
-    .panel .tag {
-      position: absolute; bottom: 8px; left: 10px; right: 10px;
-      font-size: 11px; letter-spacing: .12em; color: var(--gold); text-transform: uppercase;
-    }
+    .panel .play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.55) 100%); }
+    .panel .tag { position: absolute; bottom: 8px; left: 10px; right: 10px; font-size: 11px; letter-spacing: .12em; color: var(--gold); text-transform: uppercase; }
     .panel .play svg { opacity: 0; transition: opacity .2s; }
     .panel:hover .play svg { opacity: 1; }
+
+    /* Floating WhatsApp */
+    .wa-float { position: fixed; right: 20px; bottom: 20px; z-index: 60; display: inline-flex; align-items: center; gap: 10px;
+      background: #25D366; color: #062e13; font-weight: 700; font-size: 14px; letter-spacing: .02em;
+      padding: 12px 18px; border-radius: 999px; box-shadow: 0 10px 30px rgba(0,0,0,0.45); transition: transform .2s, box-shadow .2s; }
+    .wa-float:hover { transform: translateY(-2px); box-shadow: 0 14px 38px rgba(37,211,102,0.4); }
+    .wa-float .lbl { display: none; }
+    @media (min-width: 640px) { .wa-float .lbl { display: inline; } }
   </style>
 </head>
 
 <body class="text-white">
 
   <!-- ==================== HERO ==================== -->
-  <div class="relative h-screen w-full overflow-hidden bg-black text-white">
+  <div id="top" class="relative h-screen w-full overflow-hidden bg-black text-white">
 
-    <video
-      autoplay muted loop playsinline
+    <video autoplay muted loop playsinline
       class="absolute inset-0 h-full w-full object-cover lg:scale-[1.2]"
-      src="hero.mp4">
-    </video>
+      src="hero.mp4"></video>
 
-    <!-- golden tint wash -->
     <div class="hero-tint"></div>
 
     <div class="relative z-10 flex h-full flex-col px-5 sm:px-6 md:px-10 lg:px-14">
 
-      <!-- NAVBAR -->
       <nav class="flex items-center justify-between py-6">
         <a href="#top" aria-label="Khalid Bin Helaly">
           <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 256 256" fill="none">
@@ -102,12 +98,13 @@
           </svg>
         </a>
 
-        <div class="hidden md:flex items-center gap-8 text-sm tracking-wide">
+        <div class="hidden md:flex items-center gap-5 lg:gap-6 text-xs lg:text-sm tracking-wide">
           <a href="#about" class="hover:text-gold transition-colors">ABOUT</a>
           <a href="#work" class="hover:text-gold transition-colors">WORK</a>
           <a href="#services" class="hover:text-gold transition-colors">SERVICES</a>
           <a href="#films" class="hover:text-gold transition-colors">FILMS</a>
           <a href="#commercial" class="hover:text-gold transition-colors">COMMERCIAL</a>
+          <a href="#reels" class="hover:text-gold transition-colors">REELS</a>
           <a href="#talk" class="hover:text-gold transition-colors">TALK</a>
         </div>
 
@@ -116,7 +113,6 @@
         </button>
       </nav>
 
-      <!-- META GRID -->
       <div class="mt-4 grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
         <div>
           <h2 class="text-lg md:text-xl tracking-wide leading-tight">
@@ -125,10 +121,10 @@
           </h2>
           <div class="text-[10px] text-gold/60 mt-3">*</div>
           <p class="font-pixel mt-1 text-xs text-white/60 leading-relaxed">
-            TOPZID is my AI<br>
-            studio - I cook up cinematic<br>
-            brand films &amp; content<br>
-            systems from Bangladesh
+            TOPZID is my AI studio.<br>
+            I craft cinematic brand<br>
+            films and content systems<br>
+            from Bangladesh
           </p>
         </div>
 
@@ -142,7 +138,7 @@
         <div>
           <div class="text-base tracking-widest text-gold/80 uppercase mb-3 font-pixel">What I Do</div>
           <p class="text-sm text-white/90 leading-relaxed max-w-[220px]">
-            I create the top 1% of AI-generated films and brand content for ambitious brands and creators
+            I build the top 1% of AI-generated films and brand content for ambitious brands and creators
           </p>
         </div>
 
@@ -161,7 +157,6 @@
 
       <div class="flex-1"></div>
 
-      <!-- BOTTOM -->
       <div class="pb-4">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 items-end">
           <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-[3.75rem] xl:text-[4.25rem] tracking-wide uppercase font-normal" style="line-height:0.72">
@@ -180,11 +175,11 @@
             <div class="self-start lg:self-end flex flex-wrap items-stretch gap-2 sm:gap-3 text-sm text-white/80">
               <div class="bg-[#0B0B0B] border border-gold/20 px-3 sm:px-4 py-2 flex items-center gap-2">
                 <span class="font-bold text-sm sm:text-base tracking-tight">AI FILMS</span>
-                <span class="text-gold text-xs">300+</span>
+                <span class="text-gold text-xs">500+</span>
               </div>
               <div class="bg-[#0B0B0B] border border-gold/20 px-3 sm:px-4 py-2 flex items-center gap-2">
-                <span class="font-bold text-lg sm:text-xl">BRANDS</span>
-                <span class="text-gold text-xs">25+</span>
+                <span class="font-bold text-lg sm:text-xl">EXPERIENCE</span>
+                <span class="text-gold text-xs">13 YRS</span>
               </div>
               <div class="bg-[#0B0B0B] border border-gold/20 px-3 sm:px-4 py-2 flex items-center gap-2">
                 <span class="font-bold text-[10px] sm:text-xs tracking-tight">AI TOOLS MASTERED</span>
@@ -200,7 +195,7 @@
             <a href="#talk" class="text-gold hover:text-goldbright transition-colors">Schedule a call</a>
           </div>
           <div class="text-xs text-white/60 sm:text-right">
-            300+ AI films &bull; 25+ brands &bull; Dhaka, Bangladesh
+            500+ AI films &bull; 13 yrs in marketing &bull; Dhaka, Bangladesh
           </div>
         </div>
       </div>
@@ -211,6 +206,20 @@
     </a>
   </div>
 
+  <!-- ==================== WORKED WITH (brand marquee) ==================== -->
+  <section class="bg-black py-8 border-t border-gold/15 overflow-hidden">
+    <div class="px-5 sm:px-6 md:px-10 lg:px-14 mb-5">
+      <div class="font-pixel text-xs tracking-widest text-gold/80 uppercase">Worked With</div>
+    </div>
+    <div class="marquee">
+      <div class="marquee-track" id="brandTrack"></div>
+    </div>
+    <div class="px-5 sm:px-6 md:px-10 lg:px-14 mt-6 text-xs text-white/45">
+      <span class="text-gold/80 font-pixel tracking-widest uppercase">Collaborations &amp; Consultancy:</span>
+      Asiatic MCL &bull; DotBird &bull; X Integrated &bull; Legit Banda &bull; Pencil Sketch
+    </div>
+  </section>
+
   <!-- ==================== WORK — 3D FLOATING RING ==================== -->
   <section id="work" class="bg-black py-16 sm:py-24 px-5 sm:px-6 md:px-10 lg:px-14 border-t border-gold/15">
     <div class="flex items-end justify-between mb-6 sm:mb-10">
@@ -220,10 +229,7 @@
       </div>
       <div class="hidden sm:block text-xs text-white/40 text-right max-w-[220px]">Drag to spin &bull; click a panel to play</div>
     </div>
-
-    <div class="scene" id="scene">
-      <div class="ring" id="ring"></div>
-    </div>
+    <div class="scene" id="scene"><div class="ring" id="ring"></div></div>
   </section>
 
   <!-- ==================== FILMS ==================== -->
@@ -244,6 +250,15 @@
     <div id="commercialGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"></div>
   </section>
 
+  <!-- ==================== REELS ==================== -->
+  <section id="reels" class="bg-black py-16 sm:py-24 px-5 sm:px-6 md:px-10 lg:px-14 border-t border-gold/15">
+    <div class="mb-8">
+      <div class="font-pixel text-base tracking-widest text-gold/80 uppercase mb-2">Reels</div>
+      <h2 class="text-2xl sm:text-3xl md:text-4xl uppercase tracking-wide">Product <span class="font-pixel text-[1.15em] text-gold">Reels</span> That Performed</h2>
+    </div>
+    <div id="reelsGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 max-w-3xl"></div>
+  </section>
+
   <!-- ==================== SERVICES ==================== -->
   <section id="services" class="bg-black py-16 sm:py-24 px-5 sm:px-6 md:px-10 lg:px-14 border-t border-gold/15">
     <div class="mb-8">
@@ -251,15 +266,15 @@
       <h2 class="text-2xl sm:text-3xl md:text-4xl uppercase tracking-wide">What I <span class="font-pixel text-[1.15em] text-gold">Offer</span></h2>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-gold/15 border border-gold/15">
-      <div class="bg-black p-6 sm:p-8 group hover:bg-studio transition-colors">
+      <div class="bg-black p-6 sm:p-8 hover:bg-studio transition-colors">
         <div class="font-pixel text-gold text-sm mb-3">01</div>
         <h3 class="text-lg sm:text-xl mb-2">AI Filmmaking &amp; Cinematography</h3>
-        <p class="text-sm text-white/60 leading-relaxed">Generative cinematic films, brand reels, and commercials built with a full AI production pipeline — from concept to final grade.</p>
+        <p class="text-sm text-white/60 leading-relaxed">Generative cinematic films, brand reels and commercials built on a full AI production pipeline, from concept to final grade.</p>
       </div>
       <div class="bg-black p-6 sm:p-8 hover:bg-studio transition-colors">
         <div class="font-pixel text-gold text-sm mb-3">02</div>
         <h3 class="text-lg sm:text-xl mb-2">Brand Strategy &amp; Consulting</h3>
-        <p class="text-sm text-white/60 leading-relaxed">Positioning, growth strategy, and marketing psychology — mapping your audience through every stage of awareness to the sale.</p>
+        <p class="text-sm text-white/60 leading-relaxed">Positioning, growth strategy and marketing psychology that move your audience through every stage of awareness to the sale.</p>
       </div>
       <div class="bg-black p-6 sm:p-8 hover:bg-studio transition-colors">
         <div class="font-pixel text-gold text-sm mb-3">03</div>
@@ -269,12 +284,12 @@
       <div class="bg-black p-6 sm:p-8 hover:bg-studio transition-colors">
         <div class="font-pixel text-gold text-sm mb-3">04</div>
         <h3 class="text-lg sm:text-xl mb-2">Prompt Engineering</h3>
-        <p class="text-sm text-white/60 leading-relaxed">Production-grade prompt systems across Midjourney, Kling, Veo, Runway, Higgsfield and more — consistent, repeatable, on-brand.</p>
+        <p class="text-sm text-white/60 leading-relaxed">Production-grade prompt systems across Midjourney, Kling, Veo, Runway, Higgsfield and more. Consistent, repeatable, on-brand.</p>
       </div>
       <div class="bg-black p-6 sm:p-8 hover:bg-studio transition-colors">
         <div class="font-pixel text-gold text-sm mb-3">05</div>
         <h3 class="text-lg sm:text-xl mb-2">Marketing Systems &amp; Automation</h3>
-        <p class="text-sm text-white/60 leading-relaxed">Content engines and workflow automation (n8n + AI) that turn one idea into a full multi-platform campaign at scale.</p>
+        <p class="text-sm text-white/60 leading-relaxed">Content engines and workflow automation with n8n and AI that turn one idea into a full multi-platform campaign at scale.</p>
       </div>
       <div class="bg-black p-6 sm:p-8 hover:bg-studio transition-colors">
         <div class="font-pixel text-gold text-sm mb-3">06</div>
@@ -290,14 +305,17 @@
       <div>
         <div class="font-pixel text-base tracking-widest text-gold/80 uppercase mb-4">About</div>
         <h2 class="text-3xl sm:text-4xl md:text-5xl uppercase tracking-wide leading-[0.9] mb-6">
-          Creative <span class="font-pixel text-[1.15em] text-gold">Entrepreneur</span><br>
-          &amp; AI <span class="font-pixel text-[1.15em] text-gold">Strategist</span>
+          Founder of AI-Native<br>
+          Agency <span class="font-pixel text-[1.15em] text-gold">TOPZID</span>
         </h2>
         <p class="text-sm sm:text-base text-white/70 leading-relaxed mb-4">
-          I'm Khalid Bin Helaly — a Bangladeshi creative entrepreneur, AI strategist, filmmaker and brand consultant working at the intersection of AI, storytelling, marketing and business strategy.
+          I'm Khalid Bin Helaly, an AI creative entrepreneur and consultant based in Dhaka. I founded TOPZID, an AI-native creative agency that produces cinematic brand films and content at a scale traditional studios cannot match.
+        </p>
+        <p class="text-sm sm:text-base text-white/70 leading-relaxed mb-4">
+          Across 13 years in marketing I've worked with Coke Studio, Marico, Unilever, Berger, bKash, Chaldal, PRAN RFL, Vision Electronics and Nutrition Depot. I run an active consultancy at Asiatic MCL and collaborate across the industry with DotBird, X Integrated, Legit Banda and Pencil Sketch.
         </p>
         <p class="text-sm sm:text-base text-white/70 leading-relaxed">
-          As founder of <span class="text-gold">TOPZID</span>, I've produced hundreds of AI commercial videos for brands across Bangladesh, and I'm building a personal brand around AI creativity and automation — combining multiple AI tools into single, cinematic production workflows.
+          I also popularized the <span class="text-gold">Madhouse</span>, where I teach <span class="text-gold">One Man AI OS</span>, the operating system for building and running an entire creative business solo with AI.
         </p>
       </div>
       <div class="grid grid-cols-2 gap-px bg-gold/15 border border-gold/15">
@@ -318,7 +336,7 @@
           Let's <span class="font-pixel text-[1.15em] text-gold">Build</span><br>Something
         </h2>
         <p class="text-sm sm:text-base text-white/70 leading-relaxed max-w-md">
-          Freelance, consulting or brand partnership — tell me what you're building and I'll get back to you. Every message lands straight in my inbox.
+          Freelance, consulting or brand partnership. Tell me what you're building and it lands straight in my inbox.
         </p>
 
         <div class="mt-8">
@@ -330,9 +348,8 @@
             <a href="https://www.instagram.com/khalidhelaly/" target="_blank" rel="noopener" aria-label="Instagram" class="flex items-center justify-center w-11 h-11 border border-gold/30 text-gold hover:bg-gold/10 hover:border-gold transition-colors"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>
             <a href="https://www.tiktok.com/@khalidhelaly" target="_blank" rel="noopener" aria-label="TikTok" class="flex items-center justify-center w-11 h-11 border border-gold/30 text-gold hover:bg-gold/10 hover:border-gold transition-colors"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 5.8a4.3 4.3 0 0 1-1-2.8h-3.4v13.6a2.5 2.5 0 1 1-2.5-2.5c.3 0 .5 0 .7.1V10.7a5.9 5.9 0 1 0 5.2 5.9V8.7a7.6 7.6 0 0 0 4.4 1.4V6.7a4.3 4.3 0 0 1-3.4-.9z"/></svg></a>
           </div>
-          <div class="mt-6 flex flex-col gap-2 text-sm">
-            <a href="https://wa.me/8801681096975" target="_blank" rel="noopener" class="inline-flex items-center gap-3 text-white/80 hover:text-gold transition-colors"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.7 1-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5 4.5.7.3 1.2.5 1.7.6.7.2 1.3.2 1.8.1.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.3A10 10 0 1 0 12 2zm0 18.3a8.3 8.3 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.3 8.3 0 1 1 12 20.3z"/></svg><span>+880 1681-096975 <span class="text-white/40">· WhatsApp</span></span></a>
-            <a href="mailto:khalid@topzid.com" class="inline-flex items-center gap-3 text-white/80 hover:text-gold transition-colors"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg><span>khalid@topzid.com</span></a>
+          <div class="mt-6">
+            <a href="mailto:khalid@topzid.com" class="inline-flex items-center gap-3 text-sm text-white/80 hover:text-gold transition-colors"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg><span>khalid@topzid.com</span></a>
           </div>
         </div>
       </div>
@@ -353,6 +370,7 @@
           <textarea name="message" required maxlength="5000" rows="5"
             class="mt-2 w-full bg-transparent border border-white/20 focus:border-gold outline-none px-4 py-3 text-sm transition-colors resize-none" placeholder="Tell me about your project..."></textarea>
         </div>
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
         <button type="submit" id="submitBtn"
           class="self-start flex items-center gap-3 border border-gold/40 px-6 py-3 bg-gold/10 hover:bg-gold/20 transition-colors disabled:opacity-50">
           <span class="text-sm tracking-wider text-gold" id="submitLabel">SEND MESSAGE</span>
@@ -362,7 +380,7 @@
     </div>
 
     <div class="mt-16 pt-6 border-t border-gold/15 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/40">
-      <div>&copy; 2026 Khalid Bin Helaly &bull; <span class="text-gold/70">TOPZID</span></div>
+      <div>&copy; 2026 Khalid Bin Helaly &bull; <span class="text-gold/70">A venture of TOPZID</span></div>
       <div class="flex items-center gap-4 text-gold/70">
         <a href="https://www.youtube.com/@khalidbinhelaly" target="_blank" rel="noopener" aria-label="YouTube" class="hover:text-gold transition-colors"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.5 15.5v-7l6.3 3.5-6.3 3.5z"/></svg></a>
         <a href="https://www.facebook.com/thekhalidway/" target="_blank" rel="noopener" aria-label="Facebook" class="hover:text-gold transition-colors"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12a12 12 0 1 0-13.9 11.9v-8.4H7v-3.5h3.1V9.4c0-3 1.8-4.7 4.5-4.7 1.3 0 2.7.2 2.7.2v3h-1.5c-1.5 0-2 .9-2 1.9v2.2h3.4l-.5 3.5h-2.9v8.4A12 12 0 0 0 24 12z"/></svg></a>
@@ -373,6 +391,12 @@
       <div>Dhaka, Bangladesh</div>
     </div>
   </section>
+
+  <!-- ==================== FLOATING WHATSAPP (single) ==================== -->
+  <a class="wa-float" href="https://wa.me/8801681096975?text=Hi%20Khalid%2C%20I%20saw%20your%20site%20and%20want%20to%20talk%20about%20a%20project." target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.7 1-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5 4.5.7.3 1.2.5 1.7.6.7.2 1.3.2 1.8.1.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.3A10 10 0 1 0 12 2z"/></svg>
+    <span class="lbl">Chat on WhatsApp</span>
+  </a>
 
   <!-- ==================== MOBILE MENU ==================== -->
   <div id="mobileMenu" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex flex-col transition-all duration-500 opacity-0 pointer-events-none" style="transition-timing-function:cubic-bezier(0.16,1,0.3,1)">
@@ -385,12 +409,13 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
       </button>
     </div>
-    <nav id="mobileNav" class="flex flex-col items-center justify-center flex-1 gap-8">
+    <nav id="mobileNav" class="flex flex-col items-center justify-center flex-1 gap-6">
       <a href="#about" class="menu-link text-2xl tracking-widest opacity-0 translate-y-4 transition-all duration-500 hover:text-gold" style="transition-timing-function:cubic-bezier(0.16,1,0.3,1)">ABOUT</a>
       <a href="#work" class="menu-link text-2xl tracking-widest opacity-0 translate-y-4 transition-all duration-500 hover:text-gold" style="transition-timing-function:cubic-bezier(0.16,1,0.3,1)">WORK</a>
       <a href="#services" class="menu-link text-2xl tracking-widest opacity-0 translate-y-4 transition-all duration-500 hover:text-gold" style="transition-timing-function:cubic-bezier(0.16,1,0.3,1)">SERVICES</a>
       <a href="#films" class="menu-link text-2xl tracking-widest opacity-0 translate-y-4 transition-all duration-500 hover:text-gold" style="transition-timing-function:cubic-bezier(0.16,1,0.3,1)">FILMS</a>
       <a href="#commercial" class="menu-link text-2xl tracking-widest opacity-0 translate-y-4 transition-all duration-500 hover:text-gold" style="transition-timing-function:cubic-bezier(0.16,1,0.3,1)">COMMERCIAL</a>
+      <a href="#reels" class="menu-link text-2xl tracking-widest opacity-0 translate-y-4 transition-all duration-500 hover:text-gold" style="transition-timing-function:cubic-bezier(0.16,1,0.3,1)">REELS</a>
       <a href="#talk" class="menu-link text-2xl tracking-widest opacity-0 translate-y-4 transition-all duration-500 hover:text-gold" style="transition-timing-function:cubic-bezier(0.16,1,0.3,1)">TALK</a>
     </nav>
   </div>
@@ -407,16 +432,27 @@
   </div>
 
   <script>
-    const films = ["61B7jntxwGE","hI9jnC2IwOs","Np7ORoRJGs0","Q8BOHYW79RM","t632xP1jL4o","CFkhvhBQkUk","1es_dDYFsM0","RxHGNNC6ppw"];
+    const films = ["61B7jntxwGE","hI9jnC2IwOs","Np7ORoRJGs0","Q8BOHYW79RM","t632xP1jL4o","CFkhvhBQkUk","1es_dDYFsM0","RxHGNNC6ppw","uN_Bl2JKHUM","B4EUSmapRGk","7-Nj8mB7cPY","uqB2s8LhTUU","he-Acbs0JfI"];
     const commercials = ["Hfhq3VXvSHg","Bi7fsl_XZR4","dCbnGqsrumc"];
+    const reels = ["937nh88yUp4","qjA8Dlj23wE"];
+
+    const brands = ["Coke Studio","Marico","Unilever","Berger","bKash","Chaldal","PRAN RFL","Vision Electronics","Nutrition Depot"];
 
     const works = [
       ...films.map((id,i) => ({id, tag: "AI Film " + String(i+1).padStart(2,'0')})),
       ...commercials.map((id,i) => ({id, tag: "Commercial " + String(i+1).padStart(2,'0')})),
+      ...reels.map((id,i) => ({id, tag: "Reel " + String(i+1).padStart(2,'0')})),
     ];
 
     const thumb = (id) => `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
     const embed = (id) => `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`;
+
+    /* BRAND MARQUEE */
+    (function(){
+      const track = document.getElementById('brandTrack');
+      const one = brands.map(b => `<span class="brand-item">${b}</span><span class="brand-dot">&bull;</span>`).join('');
+      track.innerHTML = one + one; // duplicate for seamless loop
+    })();
 
     /* LIGHTBOX */
     const lightbox = document.getElementById('lightbox');
@@ -427,7 +463,7 @@
     lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) closeVideo(); });
     document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeVideo(); });
 
-    /* GRIDS */
+    /* GRIDS (16:9) */
     function buildGrid(elId, ids){
       const el = document.getElementById(elId);
       el.innerHTML = ids.map(id => `
@@ -441,6 +477,18 @@
     buildGrid('filmsGrid', films);
     buildGrid('commercialGrid', commercials);
 
+    /* REELS (9:16 vertical) */
+    (function(){
+      const el = document.getElementById('reelsGrid');
+      el.innerHTML = reels.map(id => `
+        <div class="aspect-[9/16] border border-gold/15 bg-[#0B0B0B] overflow-hidden">
+          <iframe class="w-full h-full" loading="lazy"
+            src="https://www.youtube.com/embed/${id}?rel=0&modestbranding=1"
+            title="reel" frameborder="0"
+            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>`).join('');
+    })();
+
     /* 3D RING */
     const ring = document.getElementById('ring');
     const scene = document.getElementById('scene');
@@ -450,7 +498,7 @@
 
     function computeSize(){
       const w = window.innerWidth;
-      panelW = w < 640 ? 300 : (w < 1024 ? 500 : 700);
+      panelW = w < 640 ? 260 : (w < 1024 ? 420 : 560);
       radius = Math.round((panelW/2) / Math.tan(Math.PI / N)) + 40;
       document.documentElement.style.setProperty('--pw', panelW + 'px');
     }
@@ -512,9 +560,7 @@
     document.getElementById('closeBtn').addEventListener('click', closeMenu);
     links.forEach((l)=> l.addEventListener('click', closeMenu));
 
-    /* CONTACT FORM -> SUPABASE */
-    const SUPABASE_URL = "https://yuxdvspnxwltqchqluso.supabase.co";
-    const SUPABASE_KEY = "sb_publishable_7vjFoH1Fio_PlwjSbWnfQw_8ng889Od";
+    /* CONTACT FORM -> EMAIL (FormSubmit) */
     const form = document.getElementById('contactForm');
     const status = document.getElementById('formStatus');
     const submitBtn = document.getElementById('submitBtn');
@@ -522,22 +568,30 @@
 
     form.addEventListener('submit', async (e)=>{
       e.preventDefault();
+      if (form._honey.value) return; // spam bot trap
       status.classList.add('hidden');
       submitBtn.disabled = true;
       submitLabel.textContent = 'SENDING...';
-      const data = { name: form.name.value.trim(), email: form.email.value.trim(), message: form.message.value.trim(), source: 'landing_page' };
+      const payload = {
+        name: form.name.value.trim(),
+        email: form.email.value.trim(),
+        message: form.message.value.trim(),
+        _subject: "New message from khalidbinhelaly.com",
+        _template: "table",
+        _captcha: "false"
+      };
       try {
-        const res = await fetch(`${SUPABASE_URL}/rest/v1/contact_messages`, {
+        const res = await fetch("https://formsubmit.co/ajax/khalid@topzid.com", {
           method: 'POST',
-          headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
-          body: JSON.stringify(data)
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(payload)
         });
         if(!res.ok){ throw new Error(await res.text()); }
         form.reset();
-        status.textContent = "Message sent — I'll be in touch soon.";
+        status.textContent = "Message sent. I'll be in touch soon.";
         status.className = "text-sm text-gold";
       } catch(err){
-        status.textContent = "Something went wrong. Please email me directly.";
+        status.textContent = "Something went wrong. Please email khalid@topzid.com directly.";
         status.className = "text-sm text-red-400";
         console.error(err);
       } finally {
