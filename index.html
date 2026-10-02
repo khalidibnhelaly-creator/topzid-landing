@@ -241,6 +241,7 @@
       <h2 class="text-2xl sm:text-3xl md:text-4xl uppercase tracking-wide">Recent <span class="font-pixel text-[1.15em] text-gold">Short Films</span></h2>
       <p class="mt-4 text-sm text-white/60 leading-relaxed max-w-2xl">Story-first cinematic short films. My most recent work, start to finish.</p>
     </div>
+    <div id="featuredLatest" class="mb-6 sm:mb-8 max-w-5xl"></div>
     <div id="shortsGrid" class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 max-w-5xl"></div>
   </section>
 
@@ -459,7 +460,7 @@
     const commercials = ["Hfhq3VXvSHg","Bi7fsl_XZR4","dCbnGqsrumc","qJ71KuWQt-I","YB5WQRCCdd0","W9smzMgoI8g","ORwvpbTkJ2Y","cirhzMmpeo8"];
     const liveAction = ["Wl-oU9_H_O4","JKIffQMDUrI","Imp_8LxhdiE","mi_4aXcen50","37KlGBvjez8","3wWkbC-Af00","yZRsxtpv3-g","nFaOAz_DkQI","pm2iBARhT2A","4RRG4fQSMQk","kO_3c5PYre0","X9uOkfwaT6Q","aKFRVkRmBAA","BLKBiXXDM-A","8S41Qe-ZIl4","3A6sh55VIh4","yQRLkt5ojuc","_KCbXsA82YY","S8ehgpXxtUA","9GDgdxZOyVE","QS0c0T6L_J0"];
     const reels = ["937nh88yUp4","qjA8Dlj23wE"];
-    const shorts = ["mCk9-QzPGhI","RphZ79_nymY","K3qy5cjjCtY","RGdkKv2QrcM"];
+    const shorts = ["wCkB-Y2SU7k","mCk9-QzPGhI","RphZ79_nymY","K3qy5cjjCtY","RGdkKv2QrcM"];
 
     const brands = ["Coke Studio","Marico","Unilever","Berger","bKash","Chaldal","PRAN RFL","Vision Electronics","Nutrition Depot"];
 
@@ -504,7 +505,18 @@
         </button>`).join('');
       el.querySelectorAll('.fac').forEach(b => b.addEventListener('click', ()=> openVideo(b.dataset.id)));
     }
-    facadeGrid('shortsGrid', shorts, 'aspect-video');
+    /* Featured latest short film (highlighted with badge + gold glow) */
+    (function(){
+      const id = shorts[0];
+      const el = document.getElementById('featuredLatest');
+      el.innerHTML = '<button data-id="'+id+'" class="fac group relative block w-full aspect-video border border-gold/50 bg-[#0B0B0B] overflow-hidden" style="box-shadow:0 0 0 1px rgba(201,162,75,.25), 0 30px 80px rgba(0,0,0,.6)">'
+        + '<img src="'+thumb(id)+'" loading="lazy" alt="latest film" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity">'
+        + '<span class="absolute top-4 left-4 bg-gold text-black text-[11px] font-bold tracking-widest uppercase px-3 py-1">Latest Release</span>'
+        + '<span class="absolute inset-0 flex items-center justify-center"><span class="w-16 h-16 rounded-full bg-black/50 border border-gold/70 flex items-center justify-center group-hover:bg-black/30 transition-colors"><svg width="26" height="26" viewBox="0 0 24 24" fill="#C9A24B"><polygon points="6 3 20 12 6 21 6 3"/></svg></span></span>'
+        + '</button>';
+      el.querySelector('.fac').addEventListener('click', function(){ openVideo(id); });
+    })();
+    facadeGrid('shortsGrid', shorts.slice(1), 'aspect-video');
     facadeGrid('filmsGrid', films, 'aspect-video');
     facadeGrid('commercialGrid', commercials, 'aspect-video');
     facadeGrid('liveGrid', liveAction, 'aspect-video');
