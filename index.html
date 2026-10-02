@@ -472,7 +472,8 @@
       ...reels.map((id,i) => ({id, tag: "Reel " + String(i+1).padStart(2,'0')})),
     ];
 
-    const thumb = (id) => `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+    const posterOverride = { "wCkB-Y2SU7k": "card-declined.jpg" };
+    const thumb = (id) => posterOverride[id] || `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
     const embed = (id) => `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`;
 
     /* BRAND MARQUEE */
